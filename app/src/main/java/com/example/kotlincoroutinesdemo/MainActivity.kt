@@ -19,9 +19,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btnDownload.setOnClickListener {
-            // Perform long running heavy task to background thread.
-            CoroutineScope(Dispatchers.IO).launch {
-                downloadTaskFromInternet()
+            CoroutineScope(Dispatchers.Main).launch {
+                val deferred1: Deferred<Int> = async(Dispatchers.IO) {
+                    getResult1()
+                }
+                val deferred2 = async(Dispatchers.IO) {
+                    getResult2()
+                }
+
+                val total = deferred1.await() + deferred2.await()
+                Log.d(TAG, "Total is $total")
+
             }
         }
 
@@ -30,15 +38,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    suspend fun getResult1(): Int {
+        Log.d(TAG, "Executing task1")
+        delay(15000)
+        return 15
+    }
 
-    private suspend fun downloadTaskFromInternet() {
-        // withContext() is used to switch scope from IO to Main, because we have to update UI
-        withContext(Dispatchers.Main) {
-            for (i in 1..20000) {
-                Log.d(TAG, "Current Thread Name : ${Thread.currentThread().name} : $i")
-                tvDownloadStatus.text = "Current Thread Name : ${Thread.currentThread().name} : $i"
-                delay(100)
-            }
-        }
+    suspend fun getResult2(): Int {
+        Log.d(TAG, "Executing task2")
+        delay(1000)
+        return 10
     }
 }
