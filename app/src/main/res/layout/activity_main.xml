@@ -5,36 +5,4 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/tvJobStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Job Status"
-        android:textColor="#009688"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnShowStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="#009688"
-        android:padding="16dp"
-        android:text="Show Status"
-        android:textColor="#ffffff" />
-
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#009688"
-        android:padding="16dp"
-        android:text="Cancel"
-        android:textColor="#ffffff" />
-
-</LinearLayout>
+    tools:context=".MainActivity" />
