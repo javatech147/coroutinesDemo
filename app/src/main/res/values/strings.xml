@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KotlinCoroutinesDemo</string>
+    <string name="txt_download_user_data">Download User Data</string>
+    <string name="txt_click_here">Click Here</string>
+</resources>
