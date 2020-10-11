@@ -7,7 +7,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
-    var count: Int = 0
+
+    lateinit var job: Job
 
     companion object {
         val TAG = MainActivity::class.java.simpleName
@@ -18,35 +19,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnDownload.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                val deferred1: Deferred<Int> = async(Dispatchers.IO) {
-                    getResult1()
-                }
-                val deferred2 = async(Dispatchers.IO) {
-                    getResult2()
-                }
+        job = CoroutineScope(Dispatchers.Main).launch {
+            downloadData()
+        }
 
-                val total = deferred1.await() + deferred2.await()
-                Log.d(TAG, "Total is $total")
-
+        btnShowStatus.setOnClickListener {
+            when {
+                job.isActive -> {
+                    tvJobStatus.text = "Active"
+                }
+                job.isCancelled -> {
+                    tvJobStatus.text = "Cancelled"
+                }
+                job.isCompleted -> {
+                    tvJobStatus.text = "Completed"
+                }
             }
         }
 
-        btnCount.setOnClickListener {
-            tvCount.text = count++.toString()
+        btnCancel.setOnClickListener {
+            job.cancel()
         }
     }
 
-    suspend fun getResult1(): Int {
-        Log.d(TAG, "Executing task1")
-        delay(15000)
-        return 15
-    }
-
-    suspend fun getResult2(): Int {
-        Log.d(TAG, "Executing task2")
-        delay(1000)
-        return 10
+    private suspend fun downloadData() {
+        withContext(Dispatchers.IO) {
+            repeat(20) {
+                delay(1000)
+                Log.d(TAG, "Repeating $it")
+            }
+        }
     }
 }

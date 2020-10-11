@@ -8,42 +8,33 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tvDownloadStatus"
+        android:id="@+id/tvJobStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Downloading task .."
+        android:text="Job Status"
         android:textColor="#009688"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btnDownload"
+        android:id="@+id/btnShowStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="#009688"
         android:padding="16dp"
-        android:text="@string/txt_download_user_data"
+        android:text="Show Status"
         android:textColor="#ffffff" />
 
-    <TextView
-        android:id="@+id/tvCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="00"
-        android:textColor="#009688"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
     <Button
-        android:id="@+id/btnCount"
+        android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="#009688"
         android:padding="16dp"
-        android:text="@string/txt_click_here"
+        android:text="Cancel"
         android:textColor="#ffffff" />
 
 </LinearLayout>
