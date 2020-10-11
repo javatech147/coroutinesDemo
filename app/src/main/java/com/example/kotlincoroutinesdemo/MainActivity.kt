@@ -9,6 +9,8 @@ import kotlinx.coroutines.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var job: Job
+    lateinit var deferred: Deferred<Int>
+    var count = 0
 
     companion object {
         val TAG = MainActivity::class.java.simpleName
@@ -20,7 +22,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         job = CoroutineScope(Dispatchers.Main).launch {
-            downloadData()
+            val result = getTotalUserCount()
+            Log.d(TAG, "Total User Count : $result")
         }
 
         btnShowStatus.setOnClickListener {
@@ -42,12 +45,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun downloadData() {
-        withContext(Dispatchers.IO) {
-            repeat(20) {
+    private suspend fun getTotalUserCount(): Int {
+        coroutineScope {
+            launch(Dispatchers.IO) {
                 delay(1000)
-                Log.d(TAG, "Repeating $it")
+                count = 50
+            }
+
+            deferred = async(Dispatchers.IO) {
+                delay(3000)
+                return@async 70
             }
         }
+        return count + deferred.await()
     }
+
 }
